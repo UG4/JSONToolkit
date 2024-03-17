@@ -9,7 +9,7 @@ Please install/clone this repository through UG4's package manager[ughub](https:
 
 
  ```
- cmake -DJSON=ON ..
+ cmake -DJSONToolkit=ON ..
  ```
 
 
