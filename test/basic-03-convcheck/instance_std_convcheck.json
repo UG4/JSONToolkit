@@ -1,0 +1,6 @@
+{	
+	"type": "standard", 
+	"iterations": 20,
+	"relative": 1e-8,
+	"absolute": 1e-12
+}
