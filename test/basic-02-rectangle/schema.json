@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "A rectangle",
+    "properties": {
+        "width": {
+            "$ref": "#/definitions/length",
+            "default": 20
+        },
+        "height": {
+            "$ref": "#/definitions/length"
+        }
+    },
+    "definitions": {
+        "length": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 10
+        }
+    }
+}
