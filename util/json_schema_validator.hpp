@@ -33,6 +33,9 @@ namespace ug
 
     	struct JSONSchemaValidator : public nlohmann::json_schema::json_validator
 		{
+
+    		typedef nlohmann::json_schema::json_validator base_type;
+
     		JSONSchemaValidator();
 
     		~JSONSchemaValidator(){};

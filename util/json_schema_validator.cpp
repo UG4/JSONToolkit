@@ -73,12 +73,7 @@ namespace ug
     //! Do the actual validation of the document
     bool JSONSchemaValidator::validate_document(json& document)
     {
-    	try {
-    		std::cin >> document;
-    	} UG_CATCH_THROW("JSONSchemaValidator: failure at offset "<<
-    			std::cin.tellg() << " while reading document.");
-
-    	custom_error_handler err;
+        custom_error_handler err;
     	this->validate(document, err);
 
     	if (err) {
