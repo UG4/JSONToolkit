@@ -62,14 +62,17 @@ the example above "{ thetaS = 0.396, thetaR = 0.350, alpha = 0.423, n = 3.06, Ks
 print ("Loading JSONToolkit...")
 util = util or {}
 
-
 if util.Parameters == nil then
 
 	util.Parameters = {}
 
-	ug_load_script("json.lua")
+	if (not util.json ) then
+		print("FATAL ERROR: JSONToolkit requires USE_JSON in ugcore. ")
+		exit();
+	end
 
-	local json = JSONLuaLibrary
+	-- Use util.json (from ugcore) -- ug_load_script("json.lua")
+	local json = util.json 
 
 	-- Provides an constructor that will create an empty parameter object
 	function util.Parameters:new()
