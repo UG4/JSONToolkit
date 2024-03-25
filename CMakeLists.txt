@@ -30,10 +30,11 @@
 
 # Name of your plugin and sources.
 set(pluginName	JSONToolkit)
-set(SOURCES		util/json_plugin.cpp
-				util/parameter_set.cpp
-				util/json_toolkit.cpp	
-				util/json_schema_validator.cpp	
+set(SOURCES		src/json_plugin.cpp
+				src/parameter_set.cpp
+				src/json_toolkit.cpp	
+				src/json_schema_validator.cpp	
+				src/json_factory.cpp	
 				# json-schema-validator
 				external/json-schema-validator/src/smtp-address-validator.cpp
         		external/json-schema-validator/src/json-schema-draft7.json.cpp
