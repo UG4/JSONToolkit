@@ -23,9 +23,9 @@ std::string JSON_dump(const nlohmann::json& j);
  ```
 b) a class **JSONSchemaValidator** for validating JSON:
  ```
-JSONSchemaValidator::JSONSchemaValidator()
-void JSONSchemaValidator::init(nlohmann::json& schema)
-JSONSchemaValidator::validate_document(nlohmann::json& document)
+JSONSchemaValidator::JSONSchemaValidator();
+void JSONSchemaValidator::init(nlohmann::json& schema);
+bool JSONSchemaValidator::validate_document(nlohmann::json& document);
  ```
 
 
