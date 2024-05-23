@@ -15,14 +15,13 @@ Please install/clone this repository through UG4's package manager[ughub](https:
 ## Functionality
 
 This plugin provides:
-* a class 'JSON' representing 'nlohmann::json';
-and functions
+a) a class **JSON** representing 'nlohmann::json' and functions
  ```
 void JSON_parse(nlohmann::json& j, std::string s);
 bool JSON_load_from_file(nlohmann::json& j, std::string filename);
 std::string JSON_dump(const nlohmann::json& j);
  ```
- 
+b) a class **JSONSchemaValidator** for validating JSON:
  ```
 JSONSchemaValidator::JSONSchemaValidator()
 void JSONSchemaValidator::init(nlohmann::json& schema)
