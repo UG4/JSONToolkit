@@ -17,11 +17,16 @@ Please install/clone this repository through UG4's package manager[ughub](https:
 This plugin provides:
 a) a class **JSON** representing 'nlohmann::json' and functions
  ```
-SmartPtr<void> JSON_create_object(const nlohmann::json& j);
 void JSON_parse(nlohmann::json& j, std::string s);
 bool JSON_load_from_file(nlohmann::json& j, std::string filename);
 std::string JSON_dump(const nlohmann::json& j);
  ```
+Outdated is:
+ ```
+SmartPtr<void> JSON_create_object(const nlohmann::json& j);
+ ```
+which should be replaced by JSON_create_XYT or jXYZ in the registry.
+
 b) a class **JSONSchemaValidator** for validating JSON:
  ```
 JSONSchemaValidator::JSONSchemaValidator();
