@@ -1,5 +1,7 @@
-# Copyright (c) 2011-2020:  G-CSC, Goethe University Frankfurt
-# Author: Tim Schön
+# Copyright (c) 2011-2022:  G-CSC, Goethe University Frankfurt
+# Copyright (c) 2022:  Goethe University Frankfurt
+#
+# Authors: Tim Schoen, Arne Naegel
 # 
 # This file is part of UG4.
 # 
@@ -34,7 +36,6 @@ set(SOURCES		src/json_plugin.cpp
 				src/parameter_set.cpp
 				src/json_toolkit.cpp	
 				src/json_schema_validator.cpp	
-				src/json_factory.cpp	
 				# json-schema-validator
 				external/json-schema-validator/src/smtp-address-validator.cpp
         		external/json-schema-validator/src/json-schema-draft7.json.cpp
@@ -44,13 +45,7 @@ set(SOURCES		src/json_plugin.cpp
         		external/json-schema-validator/src/string-format-check.cpp	
 				)
 
-# 
-
-# External libs (JSON).
-include_directories(AFTER ${UG_ROOT_PATH}/externals/JSONForUG4/json-cxx/single_include)  # JSON
-include_directories(AFTER ${CMAKE_CURRENT_SOURCE_DIR}/external/json-schema-validator/src)
-
-
+MESSAGE(STATUS "JSONToolkit:")
 
 # Add json-schema-validator
 add_subdirectory(external/json-schema-validator)
@@ -61,20 +56,51 @@ set (CMAKE_CXX_STANDARD 11)
 ################################################################################
 # The code below doesn't have to be changed (usually)
 ################################################################################
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.12)
 
 project(UG_PLUGIN_${pluginName} LANGUAGES CXX)
-
-
 
 # Include the definitions and dependencies for ug-plugins.
 include(${UG_ROOT_CMAKE_PATH}/ug_plugin_includes.cmake)
 
+
+################################################################################
+# Classic binding (static or dynamic plugin).
+################################################################################
+if(NOT USE_PYBIND11)
 if(buildEmbeddedPlugins)
 	# add the sources to ug4's sources
 	EXPORTSOURCES(${CMAKE_CURRENT_SOURCE_DIR} ${SOURCES})
 else(buildEmbeddedPlugins)
 	# create a shared library from the sources and link it against ug4.
 	add_library(${pluginName} SHARED ${SOURCES})
+	target_include_directories(${pluginName} PUBLIC ${UG_ROOT_PATH}/externals/JSONForUG4/json-cxx/single_include)  # nlohmann-JSON
+	target_include_directories(${pluginName} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/json-schema-validator/src) 
+	
 	target_link_libraries (${pluginName} ug4)
 endif(buildEmbeddedPlugins)
+endif(NOT USE_PYBIND11)
+
+################################################################################
+# Python binding (static plugin, dynamic python interface).
+################################################################################
+
+if(USE_PYBIND11)
+
+	# Create a STATIC library for UG4 stuff from the sources
+	add_library(${pluginName} STATIC ${SOURCES})
+	target_include_directories(${pluginName} PUBLIC ${UG_ROOT_PATH}/externals/JSONForUG4/json-cxx/single_include)  # nlohmann-JSON
+	target_include_directories(${pluginName} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/json-schema-validator/src) 
+		
+	SET(myPluginSources json_pybind.cpp)
+	SET(myLibraries ug4 ${pluginName})
+	
+	# First argument must match module name in PYBIND11_MODULE call
+	python_add_library(pyjson MODULE  ${myPluginSources} ${SOURCES} WITH_SOABI)
+	#ug4pybind_add_module(pyjson ${myPluginSources} ${myLibraries})
+	target_link_libraries (pyjson PRIVATE ${pluginName} ug4_s)
+	set_target_properties(pyjson PROPERTIES INSTALL_RPATH "$ORIGIN/..:$ORIGIN/../../../lib")
+	install(TARGETS pyjson LIBRARY DESTINATION ug4py COMPONENT pymodules)
+endif(USE_PYBIND11)
+
+

@@ -111,11 +111,11 @@ namespace ug{
 			}
 		};
 
-	}//	end of namespace ParameterEstimator
+	}//	end of namespace JSONToolkit
 
-
-	extern "C" void
-	InitUGPlugin_JSONToolkit(Registry* reg, string grp)
+	// Template auxiliary.
+	template <typename TRegistry=ug::bridge::Registry>
+	void InitUGPlugin_JSONToolkit_(TRegistry* reg, string grp)
 	{
 		grp.append("/JSONToolkit");
 		typedef JSONToolkit::Functionality Functionality;
@@ -126,10 +126,25 @@ namespace ug{
 		UG_REGISTRY_CATCH_THROW(grp);
 	}
 
+
+	// Classic expose.
+	extern "C" UG_API void
+	InitUGPlugin_JSONToolkit(ug::bridge::Registry* reg, string grp)
+	{ InitUGPlugin_JSONToolkit_<ug::bridge::Registry>(reg, grp); }
+
 	extern "C" UG_API void
 	FinalizeUGPlugin_JSONToolkit()
-	{
+	{}
+
+
+#ifdef UG_USE_PYBIND11
+	// Expose for pybind11.
+	namespace JSONToolkit{
+		void InitUGPlugin(ug::pybind::Registry* reg, string grp)
+		{ InitUGPlugin_Limex_<ug::pybind::Registry>(reg, grp); }
 	}
+#endif
+
 
 
 }//	end of namespace ug
