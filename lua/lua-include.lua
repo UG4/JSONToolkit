@@ -66,9 +66,9 @@ if util.Parameters == nil then
 
 	util.Parameters = {}
 
-	if (not util.json ) then
-		print("FATAL ERROR: JSONToolkit requires USE_JSON in ugcore. ")
-		exit();
+	if (not util.json) then
+		print("ERROR: JSONToolkit requires USE_JSON in ugcore. ")
+		-- exit();
 	end
 
 	-- Use util.json (from ugcore) -- ug_load_script("json.lua")
