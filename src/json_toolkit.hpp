@@ -28,10 +28,19 @@ namespace ug
     namespace JSONToolkit
     {
 
-    	SmartPtr<void> JSON_create_object(const nlohmann::json& j);
-    	void JSON_parse(nlohmann::json& j, std::string s);
-    	bool JSON_load_from_file(nlohmann::json& j, std::string filename);
-    	std::string JSON_dump(const nlohmann::json& j);
+    	// TODO: Move into separate class.
+    	struct JSONTool {
+    		JSONTool(){}
+
+    		static SmartPtr<void> create_object(const nlohmann::json& j);
+
+    		static SmartPtr<nlohmann::json> create(const std::string &s);
+    		static SmartPtr<nlohmann::json> create_from_file(const std::string &s);
+
+    		static void parse(nlohmann::json& j, std::string s);
+    		static bool load_from_file(nlohmann::json& j, std::string filename);
+    		static std::string dump(const nlohmann::json& j);
+     };
 
 
    } // namespace JSONToolkit

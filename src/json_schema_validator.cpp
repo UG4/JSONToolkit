@@ -76,11 +76,12 @@ namespace ug
         custom_error_handler err;
     	this->validate(document, err);
 
-    	if (err) {
-    		UG_LOG("schema validation failed!"); return false;
-    	} else {
-    		UG_LOG("document is valid."); return true;
-    	}
+    	/*
+    	if (err) { UG_LOG("schema validation failed!"); return false;}
+    	else { UG_LOG("document is valid."); return true; }
+    	*/
+
+    	return (err) ? false : true;
 
     }
 

@@ -84,10 +84,30 @@ namespace ug{
 						//.add_method("to_string", &J::to_string, "object", "name of the parameter", "gets the parameter by the name", "");
 					reg.add_class_to_group(name, grp);
 
-					reg.add_function("JSON_load_from_file", &JSON_load_from_file);
-					reg.add_function("JSON_parse", &JSON_parse);
-					reg.add_function("JSON_dump", &JSON_dump);
+					reg.add_function("JSON_load_from_file", &JSONTool::load_from_file);
+					reg.add_function("JSON_parse", &JSONTool::parse);
+					reg.add_function("JSON_dump", &JSONTool::dump);
+
+					reg.add_function("JSON_create", &JSONTool::create);
+					reg.add_function("JSON_create_from_file", &JSONTool::create_from_file);
 				}
+
+					/*
+				{
+					string name = "JSONTool";
+					typedef JSONTool T;
+					reg.add_class_<T>(name, grp)
+						.add_constructor<void (*)()>()
+						.add_method("load_from_file", &T::load_from_file)
+						.add_method("parse", &T::parse)
+						.add_method("dump", &T::dump)
+						.add_method("create", &T::create)
+						.add_method("create_from_file", &T::create_from_file);
+
+					reg.add_class_to_group(name, grp);
+
+				}*/
+
 				{
 					string name = "JSONSchemaValidator";
 					typedef JSONSchemaValidator J;
@@ -105,7 +125,7 @@ namespace ug{
 					typedef ParameterValue T;
 					reg.add_class_<T>(name, grp);
 
-					reg.add_function("JSON_create_object", &JSON_create_object);
+					// reg.add_function("JSON_create_object", &JSON_create_object);
 				}
 
 			}
