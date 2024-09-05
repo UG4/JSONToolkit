@@ -14,6 +14,7 @@
 
 // UG4 core.
 #include "common/util/smart_pointer.h"
+#include "common/util/path_provider.h"
 
 // My lib.
 #include "json_toolkit.hpp"
@@ -31,15 +32,8 @@ namespace ug
 
     static void loader(const json_uri &uri, json &schema)
     {
-    	std::string filename = "./" + uri.path();
-    	std::ifstream lf(filename);
-    	if (!lf.good())
-    		throw std::invalid_argument("could not open " + uri.url() + " tried with " + filename);
-    	try {
-    		lf >> schema;
-    	} catch (const std::exception &e) {
-    		throw e;
-    	}
+    	std::string filename =  ug::PathProvider::get_path(ROOT_PATH) + uri.path();
+    	JSONTool::load_from_file(schema, filename);
     }
 
     class custom_error_handler : public nlohmann::json_schema::basic_error_handler
@@ -65,8 +59,14 @@ namespace ug
     		// insert this schema as the root to the validator
     		// this resolves remote-schemas, sub-schemas and references via the given loader-function
     		this->set_root_schema(schema);
-    	}
-    	UG_CATCH_THROW("JSONSchemaValidator: setting root schema failed.");
+    	} 
+    	UG_CATCH_THROW("JSONSchemaValidator: setting root schema failed."); 
+    	/*catch (const std::exception &e) {
+    		std::cerr <<"JSONSchemaValidator: setting root schema failed - : " << e.what();
+    		throw e;
+    	}*/
+
+
 
     }
 
