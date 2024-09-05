@@ -40,7 +40,7 @@ namespace ug
     }
 
 
-    /*static*/  bool JSONTool::load_from_file(nlohmann::json& j, std::string filename)
+    bool JSONTool::load_from_file(nlohmann::json& j, std::string filename)
     {
     	UG_LOG("JSONTool::load_from_file: " + filename + "\n");
     	std::ifstream file(filename);
