@@ -29,7 +29,6 @@ namespace ug
     namespace JSONToolkit
 	{
 
-
     static void loader(const json_uri &uri, json &schema)
     {
     	std::string filename =  ug::PathProvider::get_path(ROOT_PATH) + uri.path();
@@ -46,11 +45,9 @@ namespace ug
 	};
 
 
-
     JSONSchemaValidator::JSONSchemaValidator()
     : json_validator(loader, nlohmann::json_schema::default_string_format_check)
     {}
-
 
 
     void JSONSchemaValidator::init(json& schema)
@@ -65,9 +62,6 @@ namespace ug
     		std::cerr <<"JSONSchemaValidator: setting root schema failed - : " << e.what();
     		throw e;
     	}*/
-
-
-
     }
 
     //! Do the actual validation of the document
@@ -75,11 +69,6 @@ namespace ug
     {
         custom_error_handler err;
     	this->validate(document, err);
-
-    	/*
-    	if (err) { UG_LOG("schema validation failed!"); return false;}
-    	else { UG_LOG("document is valid."); return true; }
-    	*/
 
     	return (err) ? false : true;
 
