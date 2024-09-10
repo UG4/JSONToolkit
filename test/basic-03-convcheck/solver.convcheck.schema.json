@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://ug4.org/plugins/JSONToolkit/json/schema/solver-schema.json",
     "title": "Convergence check",
     "type": "object",
     
