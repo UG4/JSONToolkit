@@ -61,7 +61,7 @@ set (CMAKE_CXX_STANDARD 11)
 ################################################################################
 # The code below doesn't have to be changed (usually)
 ################################################################################
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.12...4.4)
 
 project(UG_PLUGIN_${pluginName} LANGUAGES CXX)
 
