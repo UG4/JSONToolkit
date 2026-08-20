@@ -47,6 +47,11 @@ set(SOURCES		src/json_plugin.cpp
 
 MESSAGE(STATUS "JSONToolkit:")
 
+# Reuse UG4's bundled nlohmann-json so the schema validator does not fetch its own copy.
+if (NOT TARGET nlohmann_json)
+	add_subdirectory(${UG_ROOT_PATH}/externals/JSONForUG4/json-cxx ${CMAKE_BINARY_DIR}/json-cxx EXCLUDE_FROM_ALL)
+endif ()
+
 # Add json-schema-validator
 add_subdirectory(external/json-schema-validator)
 
@@ -56,7 +61,7 @@ set (CMAKE_CXX_STANDARD 11)
 ################################################################################
 # The code below doesn't have to be changed (usually)
 ################################################################################
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.12...4.4)
 
 project(UG_PLUGIN_${pluginName} LANGUAGES CXX)
 
